@@ -1,0 +1,63 @@
+{% extends 'notes/base.html' %}
+
+{% block title %}All Notes - Sticky Notes{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>My Sticky Notes</h2>
+        <p class="note-count">Total: {{ notes|length }} note{{ notes|length|pluralize }}</p>
+    </div>
+    
+    {% if notes %}
+        {% for note in notes %}
+            <div class="note">
+                <h3>{{ note.title }}</h3>
+                <p class="note-content">{{ note.content|truncatewords:50 }}</p>
+                
+                <div class="note-footer">
+                    <div class="note-meta">
+                        <span class="meta-item">
+                            <strong>Created:</strong> {{ note.created_at|date:"M d, Y" }}
+                        </span>
+                        {% if note.created_at|date:"Ymd" != note.updated_at|date:"Ymd" %}
+                            <span class="meta-item">
+                                <strong>Updated:</strong> {{ note.updated_at|date:"M d, Y" }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="note-actions">
+                        <a href="{% url 'note_detail' note.pk %}" class="btn btn-view">
+                            View Details
+                        </a>
+                        <a href="{% url 'note_update' note.pk %}" class="btn btn-warning">
+                            Edit
+                        </a>
+                        <a href="{% url 'note_delete' note.pk %}" class="btn btn-danger">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+        {% if notes|length > 3 %}
+            <div class="add-more">
+                <a href="{% url 'note_create' %}" class="btn btn-large">
+                    Add Another Note
+                </a>
+            </div>
+        {% endif %}
+        
+    {% else %}
+        <div class="empty-state">
+            <h3>No sticky notes yet!</h3>
+            <p class="empty-message">
+                Your board is empty. Start organizing your thoughts, tasks, and ideas by creating your first note.
+            </p>
+            <a href="{% url 'note_create' %}" class="btn btn-large btn-primary">
+                Create Your First Note
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}

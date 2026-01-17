@@ -1,0 +1,15 @@
+{% extends 'notes/base.html' %}
+
+{% block title %}Delete Note - Sticky Notes{% endblock %}
+
+{% block content %}
+    <div class="note" style="background-color: #ffe6e6;">
+        <h2>Delete Note</h2>
+        <p>Are you sure you want to delete "<strong>{{ note.title }}</strong>"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'note_detail' note.pk %}" class="btn">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
