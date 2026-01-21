@@ -41,10 +41,6 @@ sticky_notes/
 ├── README.md # This file
 └── sequence Diagram/ # System design documentation
 
-## Installation requirements
-
-### Prerequisites
-- Python 3.8+
 - pip (Python package manager)
 
 
